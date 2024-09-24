@@ -1,0 +1,56 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  font-weight: bold;
+  color: white;
+}
+
+.Form-body {
+  margin: 7px;
+  padding: 10px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 2px solid black;
+}
+label {
+  margin: 5px;
+  font-weight: bold;
+}
+
+.w3-input {
+  width: 70vh;
+}
+
+Button {
+  margin: 10px;
+}
+
+.Table-body {
+  margin: 20px;
+  border: 5px solid black;
+  text-align: center;
+}
+
+.Show-body{
+  margin: 7px;
+  padding: 10px;
+  width: 60vh;
+  text-align: center;
+  display: inline-flex;
+  flex-wrap: wrap;
+  border: 2px solid black;
+}
+
+.Data-Body {
+
+  text-align: center;
+}
