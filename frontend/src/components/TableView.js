@@ -6,6 +6,8 @@ import { Table, Button, Pagination } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateRecordModal from "./UpdateRecordModal";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
 function TableView() {
   /**
@@ -14,7 +16,7 @@ function TableView() {
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const limit = useState(5);
+  const [limit] = useState(5);
   const [show, setShow] = useState(false);
   const [item, setItem] = useState({});
   const [updateShow, setUpdateShow] = useState(false);
@@ -57,7 +59,8 @@ function TableView() {
       await axios.delete(
         `http://localhost:4000/reportDetails/api/getReport/${id}`
       );
-      getRecordHandle(page, limit); // Refetch data after deletion
+      getRecordHandle(page, limit);
+      toast.warn("Record Deleted....");
     } catch (error) {
       console.error(error);
     }
@@ -85,6 +88,7 @@ function TableView() {
 
   const onUpdate = () => {
     getRecordHandle(page, limit);
+    toast.success("Record Updation Successfull!!");
   };
 
   // Pagination Handlers for Next Record
@@ -99,6 +103,7 @@ function TableView() {
 
   return (
     <>
+      <ToastContainer />
       <ViewRecordModal show={show} data={item} handleClose={handleClose} />
       <UpdateRecordModal
         handleUpdateShow={updateShow}

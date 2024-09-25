@@ -4,6 +4,8 @@
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/ReactToastify.css";
 
 function ReportForm() {
   // States for form inputs
@@ -37,93 +39,98 @@ function ReportForm() {
         {
           email: inputPara.email, // Recipient email
           subject: "User Registration Successful", // Email subject
-          message: `Hello ${inputPara.firstName} ${inputPara.lastName}, Thank you for registering! Your report has been successfully submitted.`, // Email body
+          message: `Hello ${inputPara?.firstName} ${inputPara?.lastName}, Thank you for registering! Your report has been successfully submitted.`, // Email body
         }
       );
 
       // Reload the page after submission
       window.location.reload();
+
+      toast.success("Record Created Successfully");
     } catch (error) {
       console.error(error);
     }
   };
 
   return (
-    <div>
-      <form onSubmit={onSubmitHandle}>
-        <label>First Name</label>
-        <input
-          className="w3-input w3-border"
-          type="text"
-          name="firstName"
-          placeholder="Enter your First Name"
-          onChange={onChangeEventHandle}
-          required
-        />
+    <>
+      <ToastContainer />
+      <div>
+        <form onSubmit={onSubmitHandle}>
+          <label>First Name</label>
+          <input
+            className="w3-input w3-border"
+            type="text"
+            name="firstName"
+            placeholder="Enter your First Name"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>Last Name</label>
-        <input
-          className="w3-input w3-border"
-          type="text"
-          name="lastName"
-          placeholder="Enter your Last Name"
-          onChange={onChangeEventHandle}
-          required
-        />
+          <label>Last Name</label>
+          <input
+            className="w3-input w3-border"
+            type="text"
+            name="lastName"
+            placeholder="Enter your Last Name"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>Email</label>
-        <input
-          className="w3-input w3-border"
-          type="email"
-          name="email"
-          pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
-          placeholder="Enter your Email"
-          onChange={onChangeEventHandle}
-          required
-        />
+          <label>Email</label>
+          <input
+            className="w3-input w3-border"
+            type="email"
+            name="email"
+            pattern="[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,}$"
+            placeholder="Enter your Email"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>Marks English</label>
-        <input
-          className="w3-input w3-border"
-          type="number"
-          name="marksEnglish"
-          placeholder="Enter your Marks in English"
-          onChange={onChangeEventHandle}
-          required
-        />
+          <label>Marks English</label>
+          <input
+            className="w3-input w3-border"
+            type="number"
+            name="marksEnglish"
+            placeholder="Enter your Marks in English"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>Marks Science</label>
-        <input
-          className="w3-input w3-border"
-          type="number"
-          name="marksScience"
-          placeholder="Enter your Marks in Science"
-          onChange={onChangeEventHandle}
-          required
-        />
+          <label>Marks Science</label>
+          <input
+            className="w3-input w3-border"
+            type="number"
+            name="marksScience"
+            placeholder="Enter your Marks in Science"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>Marks Maths</label>
-        <input
-          className="w3-input w3-border"
-          type="number"
-          name="marksMaths"
-          placeholder="Enter your Marks in Maths"
-          onChange={onChangeEventHandle}
-          required
-        />
+          <label>Marks Maths</label>
+          <input
+            className="w3-input w3-border"
+            type="number"
+            name="marksMaths"
+            placeholder="Enter your Marks in Maths"
+            onChange={onChangeEventHandle}
+            required
+          />
 
-        <label>About</label>
-        <textarea
-          className="w3-input w3-border"
-          name="about"
-          placeholder="About"
-          onChange={onChangeEventHandle}
-        />
-        <Button type="submit" variant="success">
-          SUBMIT
-        </Button>
-      </form>
-    </div>
+          <label>About</label>
+          <textarea
+            className="w3-input w3-border"
+            name="about"
+            placeholder="About"
+            onChange={onChangeEventHandle}
+          />
+          <Button type="submit" variant="success">
+            SUBMIT
+          </Button>
+        </form>
+      </div>
+    </>
   );
 }
 
