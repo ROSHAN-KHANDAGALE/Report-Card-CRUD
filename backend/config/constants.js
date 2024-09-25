@@ -9,6 +9,8 @@ module.exports = {
   OK: 200,
   CREATED: 201,
   BAD_REQUEST: 400,
+  UNAUTHORIZED: 401,
+  FORBIDDEN: 403,
   NOT_FOUND: 404,
   SERVER_ERROR: 500,
 
@@ -23,4 +25,5 @@ module.exports = {
   EMAIL_SENT: "Email sent successfully",
   EMAIL_SEND_FAIL: "Failed to send email",
   MAIL_SEND: "MAIL SENDED SUCCESSFULLY!!",
+  ACCESS_DENIED: "ACCESS DENIED!!",
 };
