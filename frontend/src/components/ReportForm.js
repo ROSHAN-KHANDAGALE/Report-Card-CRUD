@@ -1,9 +1,12 @@
+/**
+ * Importing all required Pakages
+ */
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import axios from "axios";
 
 function ReportForm() {
-  // States for form input and email
+  // States for form inputs
   const [inputPara, setInputPara] = useState({
     firstName: "",
     lastName: "",
@@ -38,7 +41,7 @@ function ReportForm() {
         }
       );
 
-      // Optionally, reload the page after submission
+      // Reload the page after submission
       window.location.reload();
     } catch (error) {
       console.error(error);

@@ -7,13 +7,30 @@ const { sendRegistrationEmail } = require("../helper/mail");
  * To get User Report
  */
 exports.getReportDetails = async (req, res) => {
+  // Accept page and limit from query parameters
+  const { page = 1, limit = 2 } = req.query;
+  const pageNo = Number(page);
+  const limitNo = Number(limit);
+  const skip = (pageNo - 1) * limitNo;
+
   try {
-    const reportFound = await modelReport.find().sort({ firstName: 1 });
-    res
-      .status(constants.OK)
-      .json({ message: constants.RECORD_FOUND, report: reportFound });
+    const reportFound = await modelReport
+      .find()
+      .sort({ firstName: 1 })
+      .skip(skip)
+      .limit(limitNo);
+
+    const totalRecord = await modelReport.countDocuments();
+    const totalPages = Math.ceil(totalRecord / limitNo);
+
+    return res.status(200).json({
+      report: reportFound, // Renamed to match frontend expectation
+      totalRecord,
+      totalPages,
+      pageNo,
+    });
   } catch (error) {
-    res.status(constants.NOT_FOUND).json({ error: constants.RECORD_NOT_FOUND });
+    return res.status(404).json({ error: "Records not found." });
   }
 };
 
@@ -113,29 +130,5 @@ exports.deleteReportDetails = async (req, res) => {
       .json({ message: constants.REMOVED, report: deleteReport });
   } catch (error) {
     res.status(constants.BAD_REQUEST).json({ error: constants.REMOVE_FAIL });
-  }
-};
-
-/**
- * For pagination
- */
-exports.pagination = async (req, res) => {
-  // Accepting input para meters from user or by default page = 1 and limit = 5
-  const { page = 1, limit = 5 } = req.query;
-  const pageNo = Number(page);
-  const limitNo = Number(limit);
-  const skip = (page - 1) * limit;
-  try {
-    const getRecords = await modelReport.find().skip(skip).limit(limitNo);
-    const totalRecord = await modelReport.countDocuments();
-    const totalPages = Math.ceil(totalRecord / limitNo);
-    return res.status(constants.OK).json({
-      getRecords,
-      totalRecord,
-      totalPages,
-      pageNo,
-    });
-  } catch (error) {
-    res.status(constants.SERVER_ERROR).json({ message: error });
   }
 };

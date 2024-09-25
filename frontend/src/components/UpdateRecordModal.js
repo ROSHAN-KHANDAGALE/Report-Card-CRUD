@@ -1,13 +1,20 @@
+/**
+ * Importing all necessary packages
+ */
 import { useState, useEffect } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import axios from "axios";
 
+// Main Function Components having props in it
 function UpdateRecordModal({
   handleUpdateShow,
-  handleUpdateClose,  
+  handleUpdateClose,
   data,
   onUpdate,
 }) {
+  /**
+   * Initialization of Props for editing
+   */
   const [formData, setFormData] = useState({
     firstName: "",
     lastName: "",
@@ -33,6 +40,7 @@ function UpdateRecordModal({
     }
   }, [data]);
 
+  // For Input Handler
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -41,6 +49,9 @@ function UpdateRecordModal({
     }));
   };
 
+  /**
+   * To submit Data after updation
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {

@@ -1,14 +1,20 @@
+/**
+ * Importing all necessary packages
+ */
 import ViewRecordModal from "./ViewRecordModal";
-import { Table, Button, Pagination } from "react-bootstrap"; // Import Pagination component
+import { Table, Button, Pagination } from "react-bootstrap";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import UpdateRecordModal from "./UpdateRecordModal";
 
 function TableView() {
+  /**
+   * Initialization of useStates
+   */
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1); // Track current page
-  const [totalPages, setTotalPages] = useState(0); // Track total pages
-  const [limit, setLimit] = useState(5); // You can adjust the default limit as per your needs
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const limit = useState(5);
   const [show, setShow] = useState(false);
   const [item, setItem] = useState({});
   const [updateShow, setUpdateShow] = useState(false);
@@ -24,7 +30,11 @@ function TableView() {
           params: { page, limit },
         }
       );
+
+      // to check if data is passed properly or not
       console.log(result.data);
+
+      // To validate the data is properly passed in setData or not
       if (result.data && result?.data.report) {
         setData(result.data.report);
         setTotalPages(result.data.totalPages);
@@ -34,10 +44,14 @@ function TableView() {
     }
   };
 
+  // useEffect is used to Fetch data
   useEffect(() => {
-    getRecordHandle(page, limit); // Fetch data whenever page or limit changes
+    getRecordHandle(page, limit);
   }, [page, limit]);
 
+  /**
+   * Delete Handler to delete records from the Table
+   */
   const deleteHandle = async (id) => {
     try {
       await axios.delete(
@@ -49,6 +63,7 @@ function TableView() {
     }
   };
 
+  // For Modal View Handler
   const handeshow = (ele) => {
     setShow(true);
     setItem(ele);
@@ -58,6 +73,7 @@ function TableView() {
     setShow(false);
   };
 
+  // For Update Modal View Handler
   const handleUpdateShow = (ele) => {
     setUpdateShow(true);
     setItem(ele);
@@ -71,13 +87,14 @@ function TableView() {
     getRecordHandle(page, limit);
   };
 
-  // Pagination Control Handlers
+  // Pagination Handlers for Next Record
   const handleNext = () => {
-    if (page < totalPages) setPage(page + 1); // Move to next page if not on the last page
+    if (page < totalPages) setPage(page + 1);
   };
 
+  // Pagination Handlers for Previous Record
   const handlePrevious = () => {
-    if (page > 1) setPage(page - 1); // Move to previous page if not on the first page
+    if (page > 1) setPage(page - 1);
   };
 
   return (

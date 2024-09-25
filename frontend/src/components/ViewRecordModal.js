@@ -1,12 +1,19 @@
+/**
+ * Importing all necessary packages
+ */
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "../App.css";
 
+/**
+ * Main ViewRecordModal function has parameters as props
+ */
 function ViewRecordModal({ show, handleClose, data }) {
+  // Function to Calculate Percentage
   function calculatePercentage(marksEnglish, marksScience, marksMaths) {
     const totalObtainedMarks = (marksEnglish + marksScience + marksMaths) / 300;
     const percentage = totalObtainedMarks * 100;
-    return percentage;
+    return percentage.toFixed(2);
   }
 
   const percentage = calculatePercentage(
@@ -15,6 +22,7 @@ function ViewRecordModal({ show, handleClose, data }) {
     data?.marksMaths
   );
 
+  // Function to Calculate Grades
   const gradeCalculate = function (percentage) {
     if (percentage >= 90 && percentage <= 100) {
       return "A";
