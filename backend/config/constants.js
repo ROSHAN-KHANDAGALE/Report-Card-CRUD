@@ -2,12 +2,16 @@
  * The Following files contains the unchangable code of variable
  */
 module.exports = {
-  PORT: 4000,
+  PORTNO: 4000,
+
   DBURL: "mongodb://localhost:27017/ReportAssessmentDB",
+
   OK: 200,
   CREATED: 201,
-  NOT_FOUND: 404,
   BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  SERVER_ERROR: 500,
+
   RECORD_FOUND: "Records found",
   RECORD_NOT_FOUND: "Record not found",
   REGISTERED: "Record registered successfully",
@@ -18,4 +22,5 @@ module.exports = {
   REMOVE_FAIL: "Failed to remove record",
   EMAIL_SENT: "Email sent successfully",
   EMAIL_SEND_FAIL: "Failed to send email",
+  MAIL_SEND: "MAIL SENDED SUCCESSFULLY!!",
 };

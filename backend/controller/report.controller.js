@@ -46,13 +46,28 @@ exports.createReportDetails = async (req, res) => {
       newReport.lastName
     );
 
-    res
-      .status(constants.CREATED)
-      .json({ message: constants.REGISTERED, report: newReport });
+    res.status(constants.CREATED).json({
+      message: constants.REGISTERED + " and  " + constants.MAIL_SEND,
+      report: newReport,
+    });
   } catch (error) {
     res
       .status(constants.BAD_REQUEST)
       .json({ error: constants.REGISTER_FAILED });
+  }
+};
+
+/**
+ * To send MAIL
+ */
+exports.mail = async (req, res) => {
+  try {
+    const { email, firstName, lastName } = req.body;
+    await sendRegistrationEmail(email, firstName, lastName);
+    res.status(constants.OK).json({ message: constants.EMAIL_SENT });
+  } catch (error) {
+    console.error("Error in sending email:", error);
+    res.status(constants.BAD_REQUEST).json({ error: error.message });
   }
 };
 
@@ -102,15 +117,25 @@ exports.deleteReportDetails = async (req, res) => {
 };
 
 /**
- * To send MAIL
+ * For pagination
  */
-exports.mail = async (req, res) => {
+exports.pagination = async (req, res) => {
+  // Accepting input para meters from user or by default page = 1 and limit = 5
+  const { page = 1, limit = 5 } = req.query;
+  const pageNo = Number(page);
+  const limitNo = Number(limit);
+  const skip = (page - 1) * limit;
   try {
-    const { email, firstName, lastName } = req.body;
-    await sendRegistrationEmail(email, firstName, lastName);
-    res.status(constants.OK).json({ message: constants.EMAIL_SENT });
+    const getRecords = await modelReport.find().skip(skip).limit(limitNo);
+    const totalRecord = await modelReport.countDocuments();
+    const totalPages = Math.ceil(totalRecord / limitNo);
+    return res.status(constants.OK).json({
+      getRecords,
+      totalRecord,
+      totalPages,
+      pageNo,
+    });
   } catch (error) {
-    console.error("Error in sending email:", error);
-    res.status(constants.BAD_REQUEST).json({ error: error.message });
+    res.status(constants.SERVER_ERROR).json({ message: error });
   }
 };

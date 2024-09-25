@@ -17,6 +17,9 @@ router.delete("/api/getReport/:id", reportController.deleteReportDetails);
 // Route for sending emails
 router.post("/api/getReport/mail", reportController.mail);
 
+// For pagination
+router.get("/api", reportController.pagination);
+
 /**
  * Exporting the router file
  */

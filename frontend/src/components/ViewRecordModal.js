@@ -16,15 +16,12 @@ function ViewRecordModal({ show, handleClose, data }) {
   );
 
   const gradeCalculate = function (percentage) {
-    const a = "A";
-    const b = "B";
-    const c = "C";
     if (percentage >= 90 && percentage <= 100) {
-      return a;
+      return "A";
     } else if (percentage >= 60 && percentage <= 90) {
-      return b;
+      return "B";
     } else {
-      return c;
+      return "C";
     }
   };
 
