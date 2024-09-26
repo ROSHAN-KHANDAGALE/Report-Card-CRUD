@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
       return res.status(FORBIDDEN).json({ message: ACCESS_DENIED });
     }
 
-    const verified = jwt.verify("This_is_key : ", token);
+    const verified = jwt.verify(token, "This_is_key : ");
     console.log(verified);
 
     if (!verified) {

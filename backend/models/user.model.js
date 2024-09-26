@@ -23,7 +23,6 @@ const userModel = mongoose.Schema({
   },
   token: {
     type: String,
-    default: null,
   },
 });
 

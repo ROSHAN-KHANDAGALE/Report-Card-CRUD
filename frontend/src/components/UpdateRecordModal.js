@@ -55,10 +55,16 @@ function UpdateRecordModal({
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const token = localStorage.getItem("token");
       // Send updated data to the backend
       await axios.put(
         `http://localhost:4000/reportDetails/api/getReport/${data?._id}`,
-        formData
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token in Authorization header
+          },
+        }
       );
       // Call onUpdate to refresh the table data after successful update
       onUpdate();

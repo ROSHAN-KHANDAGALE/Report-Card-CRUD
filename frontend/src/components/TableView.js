@@ -26,13 +26,16 @@ function TableView() {
    */
   const getRecordHandle = async (page, limit) => {
     try {
+      const token = localStorage.getItem("token");
       const result = await axios.get(
-        `http://localhost:4000/reportDetails/api/getReport`,
+        "http://localhost:4000/reportDetails/api/getReport",
         {
           params: { page, limit },
+          headers: {
+            Authorization: `Bearer ${token}`, // Attach token in Authorization header
+          },
         }
       );
-
       // to check if data is passed properly or not
       console.log(result.data);
 
@@ -56,8 +59,14 @@ function TableView() {
    */
   const deleteHandle = async (id) => {
     try {
+      const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:4000/reportDetails/api/getReport/${id}`
+        `http://localhost:4000/reportDetails/api/getReport/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
       getRecordHandle(page, limit);
       toast.warn("Record Deleted....");
