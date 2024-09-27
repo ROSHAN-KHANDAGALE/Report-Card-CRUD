@@ -17,6 +17,7 @@ function TableView() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [limit] = useState(5);
+  const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [item, setItem] = useState({});
   const [updateShow, setUpdateShow] = useState(false);
@@ -24,13 +25,13 @@ function TableView() {
   /**
    * Function to fetch Records from backend with pagination
    */
-  const getRecordHandle = async (page, limit) => {
+  const getRecordHandle = async (page, limit, search = "") => {
     try {
       const token = localStorage.getItem("token");
       const result = await axios.get(
         "http://localhost:4000/reportDetails/api/getReport",
         {
-          params: { page, limit },
+          params: { page, limit, search },
           headers: {
             Authorization: `Bearer ${token}`, // Attach token in Authorization header
           },
@@ -51,8 +52,8 @@ function TableView() {
 
   // useEffect is used to Fetch data
   useEffect(() => {
-    getRecordHandle(page, limit);
-  }, [page, limit]);
+    getRecordHandle(page, limit, search);
+  }, [page, limit, search]);
 
   /**
    * Delete Handler to delete records from the Table
@@ -68,7 +69,7 @@ function TableView() {
           },
         }
       );
-      getRecordHandle(page, limit);
+      getRecordHandle(page, limit, search);
       toast.warn("Record Deleted....");
     } catch (error) {
       console.error(error);
@@ -96,7 +97,7 @@ function TableView() {
   };
 
   const onUpdate = () => {
-    getRecordHandle(page, limit);
+    getRecordHandle(page, limit, search);
     toast.success("Record Updation Successfull!!");
   };
 
@@ -112,6 +113,14 @@ function TableView() {
 
   return (
     <>
+      <input
+        type="search"
+        placeholder="Search Data"
+        value={search}
+        onChange={(e) => {
+          setSearch(e.target.value);
+        }}
+      />
       <ToastContainer />
       <ViewRecordModal show={show} data={item} handleClose={handleClose} />
       <UpdateRecordModal

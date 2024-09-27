@@ -8,19 +8,29 @@ const { sendRegistrationEmail } = require("../helper/mail");
  */
 exports.getReportDetails = async (req, res) => {
   // Accept page and limit from query parameters
-  const { page = 1, limit = 2 } = req.query;
+  const { page = 1, limit = 2, search = "" } = req.query;
   const pageNo = Number(page);
   const limitNo = Number(limit);
   const skip = (pageNo - 1) * limitNo;
 
   try {
+    const searchRegex = new RegExp(search, "i");
+
+    const query = {
+      $or: [
+        { firstName: { $regex: searchRegex } },
+        { lastName: { $regex: searchRegex } },
+        { email: { $regex: searchRegex } },
+      ],
+    };
+
     const reportFound = await modelReport
-      .find()
+      .find(query)
       .sort({ firstName: 1 })
       .skip(skip)
       .limit(limitNo);
 
-    const totalRecord = await modelReport.countDocuments();
+    const totalRecord = await modelReport.countDocuments(query);
     const totalPages = Math.ceil(totalRecord / limitNo);
 
     return res.status(200).json({
